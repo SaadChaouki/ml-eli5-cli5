@@ -1,1 +1,3 @@
-# machine-learning-implemented
+# Machine Learning Implemented
+
+Personal project coding the various ML models.
