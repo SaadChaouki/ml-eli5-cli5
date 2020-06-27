@@ -13,9 +13,11 @@ def meanAbsoluteError(yTrue, yPred):
     return np.sum(np.abs(yTrue - yPred)) / yTrue.size
 
 def precision(yTrue, yPred):
+    # todo: create precision function
     return None
 
 def recall(yTrue, yPred):
+    # todo: create recall function
     return None
 
 if __name__ == '__main__':
