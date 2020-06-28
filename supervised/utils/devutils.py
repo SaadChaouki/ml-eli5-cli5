@@ -5,12 +5,10 @@ from sklearn.datasets import make_classification
 import random
 
 def generateClassificationData(n = 1000):
-    features, output = make_classification(n_samples = n, n_features = 2,
-                                n_informative = 2, n_redundant = 0,
+    features, output = make_classification(n_samples = n, n_features = 10,
+                                n_informative = 5, n_redundant = 5,
                                 n_classes = 2)
-    generatedData = pd.DataFrame(features, columns = ['var_1', 'var_2'])
-    generatedData['target'] = output
-    return generatedData
+    return features, output
 
 def plot2d(data, x = 'var_1', y = 'var_2', c = 'target'):
     plt.clf()
