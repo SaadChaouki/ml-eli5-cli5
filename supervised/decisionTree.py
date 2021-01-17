@@ -3,7 +3,7 @@ import numpy as np
 from supervised.utils.metrics import accuracy
 
 
-class Node():
+class Node:
     def __init__(self, gini, predictedClass, featureIndex=None, featureThreshold=None, leftNode=None,
                  rightNode=None, samples=None, depth=None):
         self.gini = gini
@@ -20,7 +20,7 @@ class Node():
                f'Total Samples : {self.samples}. Depth: {self.depth}.'
 
 
-class DecisionTree():
+class DecisionTree:
     def __init__(self, maxDepth=2, minimumSample=100):
         self.maxDept = maxDepth
         self.minimumSample = minimumSample
