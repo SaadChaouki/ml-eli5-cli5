@@ -5,8 +5,8 @@ from sklearn.datasets import make_classification
 import random
 
 def generateClassificationData(n = 1000):
-    features, output = make_classification(n_samples = n, n_features = 10,
-                                n_informative = 5, n_redundant = 5,
+    features, output = make_classification(n_samples = n, n_features = 3,
+                                n_informative = 3, n_redundant = 0,
                                 n_classes = 2)
     return features, output
 
