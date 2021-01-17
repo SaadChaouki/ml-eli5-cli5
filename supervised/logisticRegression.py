@@ -3,21 +3,23 @@ import math
 import numpy as np
 from supervised.utils.activationFunctions import sigmoid
 from supervised.utils.devutils import generateClassificationData
-from supervised.utils.metrics import accuracy
+from supervised.utils.metrics import accuracy, logLoss
+
 
 class LogisticRegression():
 
-    def __init__(self, learningRate = .1):
+    def __init__(self, learningRate=.1):
         self.learningRate = learningRate
 
-    def fit(self, x, y, iterations = 1):
+    def fit(self, x, y, iterations=5000):
         # Initialize the weights
         limit = 1 / math.sqrt(x.shape[1])
         self.weights = np.random.uniform(-limit, limit, (x.shape[1],))
 
         for i in range(iterations):
             yPredicted = self.predictProbabilities(x)
-            self.weights -= self.learningRate * (np.dot(x.T,  yPredicted - y)/x.shape[0])
+            print(self.weights)
+            self.weights -= self.learningRate * (np.dot(x.T, yPredicted - y) / x.shape[0])
 
     def predictProbabilities(self, x):
         return sigmoid(np.dot(x, self.weights))
@@ -25,16 +27,17 @@ class LogisticRegression():
     def predictClasses(self, x):
         return np.round(self.predictProbabilities(x), 0)
 
+
 if __name__ == '__main__':
     # Generate data
     x, y = generateClassificationData(10)
     # Create LR
-    lr = LogisticRegression()
+    lr = LogisticRegression(learningRate=0.01)
     # fit
-    lr.fit(x, y)
+    lr.fit(x, y, iterations=10)
     # predict
-    # yPredicted = lr.predictClasses(x)
-    # yProbabilities = lr.predictProbabilities(x)
+    yPredicted = lr.predictClasses(x)
+    yProbabilities = lr.predictProbabilities(x)
     # metrics
-    # print(f'Accuracy: {accuracy(yPredicted, y)}')
-    # print(f'Log Loss: {logLoss(yProbabilities, y)}')
+    print(f'Accuracy: {accuracy(yPredicted, y)}')
+    print(f'Log Loss: {logLoss(yProbabilities, y)}')
