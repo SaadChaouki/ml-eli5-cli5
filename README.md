@@ -3,6 +3,14 @@
 Personal project coding the various ML models.
 
 
+# Table of Contents
+
+
+
+
+
+
+
 ## 1. Supervised
 ### 1.1. Logistic Regression
 Implementation of a Logistic Regression classifier from scratch.
