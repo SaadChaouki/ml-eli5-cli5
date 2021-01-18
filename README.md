@@ -1,4 +1,4 @@
-# Machine Learning Implemented
+# Machine Learning - CLI5
 
 Personal project coding the various ML models.
 
