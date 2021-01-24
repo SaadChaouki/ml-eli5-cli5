@@ -13,7 +13,6 @@ class PCA():
         eigenValues, eigenVectors = np.linalg.eigh(covMatrix)
         print(eigenValues)
 
-
 if __name__ == '__main__':
     pca = PCA(2)
     x, y = generateClassificationData(100)
