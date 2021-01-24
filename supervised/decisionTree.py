@@ -1,6 +1,6 @@
-from supervised.utils.devutils import generateClassificationData
+from utils.devutils import generateClassificationData
 import numpy as np
-from supervised.utils.metrics import accuracy
+from utils.metrics import accuracy
 
 
 class Node:
@@ -115,7 +115,7 @@ class DecisionTree:
 
 
 if __name__ == '__main__':
-    dt = DecisionTree(maxDepth=2, minimumSample=100)
+    dt = DecisionTree(maxDepth=10, minimumSample=10)
     x, y = generateClassificationData(1000)
     dt.fit(x, y)
     dt.print_tree()

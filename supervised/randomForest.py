@@ -1,5 +1,5 @@
-from supervised.utils.devutils import generateClassificationData
-from supervised.utils.metrics import accuracy, logLoss
+from utils.devutils import generateClassificationData
+from utils.metrics import accuracy
 from supervised.decisionTree import DecisionTree
 import numpy as np
 import random
@@ -47,11 +47,9 @@ class RandomForest:
         return [self.__singlePrediction(np.array([sample])) for sample in x]
 
 
-
-
 if __name__ == '__main__':
     print('Testing Random Forest:')
-    rf = RandomForest(nEstimators=10, maxDepth=4, minSampleSplit=10)
+    rf = RandomForest(nEstimators=10, maxDepth=6, minSampleSplit=10)
     x, y = generateClassificationData(1000)
     rf.fit(x, y)
     predictions = rf.predict(x)

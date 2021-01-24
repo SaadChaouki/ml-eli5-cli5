@@ -1,9 +1,9 @@
 import math
 
 import numpy as np
-from supervised.utils.activationFunctions import sigmoid
-from supervised.utils.devutils import generateClassificationData
-from supervised.utils.metrics import accuracy, logLoss
+from utils.activationFunctions import sigmoid
+from utils.devutils import generateClassificationData
+from utils.metrics import accuracy, logLoss
 
 
 class LogisticRegression():
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     # Create LR
     lr = LogisticRegression(learningRate=0.01)
     # fit
-    lr.fit(x, y, iterations=10)
+    lr.fit(x, y, iterations=5000)
     # predict
     yPredicted = lr.predictClasses(x)
     yProbabilities = lr.predictProbabilities(x)
