@@ -7,7 +7,7 @@ import random
 def generateClassificationData(n = 1000):
     features, output = make_classification(n_samples = n, n_features = 2,
                                 n_informative = 2, n_redundant = 0,
-                                n_classes = 2)
+                                n_classes = 2, random_state= 10)
     return features, output
 
 def plot2d(data, x = 'var_1', y = 'var_2', c = 'target'):
