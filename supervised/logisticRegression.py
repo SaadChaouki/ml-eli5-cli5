@@ -18,7 +18,6 @@ class LogisticRegression():
 
         for i in range(iterations):
             yPredicted = self.predictProbabilities(x)
-            print(self.weights)
             self.weights -= self.learningRate * (np.dot(x.T, yPredicted - y) / x.shape[0])
 
     def predictProbabilities(self, x):
@@ -30,9 +29,9 @@ class LogisticRegression():
 
 if __name__ == '__main__':
     # Generate data
-    x, y = generateClassificationData(10)
+    x, y = generateClassificationData(20000, k = 100)
     # Create LR
-    lr = LogisticRegression(learningRate=0.01)
+    lr = LogisticRegression(learningRate=0.1)
     # fit
     lr.fit(x, y, iterations=5000)
     # predict

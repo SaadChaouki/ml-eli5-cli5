@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 from sklearn.datasets import make_classification
 import random
 
-def generateClassificationData(n = 1000):
-    features, output = make_classification(n_samples = n, n_features = 2,
-                                n_informative = 2, n_redundant = 0,
+def generateClassificationData(n = 1000, k =2):
+    features, output = make_classification(n_samples = n, n_features = k,
+                                n_informative = k, n_redundant = 0,
                                 n_classes = 2, random_state= 10)
     return features, output
 

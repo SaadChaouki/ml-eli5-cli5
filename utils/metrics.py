@@ -2,7 +2,7 @@ import numpy as np
 
 
 def logLoss(yTrue, yPred):
-    return - np.sum(((yTrue * np.log(yPred)) + ((1 - yTrue) * np.log(1 - yPred)))) / yTrue.size
+    return - np.sum(((yTrue * np.log(yPred + 1e10)) + ((1 - yTrue) * np.log(1 - yPred + 1e10)))) / len(yTrue)
 
 
 def accuracy(yTrue, yPred):
