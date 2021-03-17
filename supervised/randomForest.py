@@ -45,12 +45,3 @@ class RandomForest:
 
     def predict(self, x):
         return [self.__singlePrediction(np.array([sample])) for sample in x]
-
-
-if __name__ == '__main__':
-    print('Testing Random Forest:')
-    rf = RandomForest(nEstimators=10, maxDepth=6, minSampleSplit=10)
-    x, y = generateClassificationData(1000)
-    rf.fit(x, y)
-    predictions = rf.predict(x)
-    print(f'Model accuracy: {accuracy(y, predictions)}')
