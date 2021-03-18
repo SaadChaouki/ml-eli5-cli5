@@ -1,9 +1,8 @@
 import math
 
 import numpy as np
+
 from utils.activationFunctions import sigmoid
-from utils.devutils import generateClassificationData
-from utils.metrics import accuracy, logLoss
 
 
 class LogisticRegression():
