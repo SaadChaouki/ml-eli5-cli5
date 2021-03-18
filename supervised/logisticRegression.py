@@ -25,18 +25,3 @@ class LogisticRegression():
 
     def predictClasses(self, x):
         return np.round(self.predictProbabilities(x), 0)
-
-
-if __name__ == '__main__':
-    # Generate data
-    x, y = generateClassificationData(20000, k = 100)
-    # Create LR
-    lr = LogisticRegression(learningRate=0.1)
-    # fit
-    lr.fit(x, y, iterations=5000)
-    # predict
-    yPredicted = lr.predictClasses(x)
-    yProbabilities = lr.predictProbabilities(x)
-    # metrics
-    print(f'Accuracy: {accuracy(yPredicted, y)}')
-    print(f'Log Loss: {logLoss(yProbabilities, y)}')
