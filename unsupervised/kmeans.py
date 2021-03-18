@@ -1,7 +1,4 @@
-# todo: Create kmeans object.
 import numpy as np
-from sklearn.datasets import make_blobs
-import matplotlib.pyplot as plt
 import random
 
 
@@ -30,12 +27,3 @@ class KMeans():
 
     def predict(self, x):
         return [self.__assignCluster(data) for data in x]
-
-
-if __name__ == '__main__':
-    kmeans = KMeans(4, iterations=100)
-    X, y = make_blobs(n_samples=10000, centers=4, n_features=2, random_state=0)
-    kmeans.fit(X)
-    predictions = kmeans.predict(X)
-    plt.scatter(X[:, 0], X[:, 1], c=predictions)
-    plt.show()
