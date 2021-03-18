@@ -1,5 +1,3 @@
-from utils.devutils import generateClassificationData
-from utils.metrics import accuracy
 from supervised.decisionTree import DecisionTree
 import numpy as np
 import random
