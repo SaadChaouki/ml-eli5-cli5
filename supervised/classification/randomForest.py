@@ -1,4 +1,4 @@
-from supervised.decisionTree import DecisionTree
+from supervised.classification.decisionTree import DecisionTree
 import numpy as np
 import random
 

@@ -1,12 +1,11 @@
-from utils.devutils import generateClassificationData
 import numpy as np
-from utils.metrics import accuracy
 
-class KNN():
+
+class KNN(object):
     def __init__(self, k):
         self.k = k
 
-    def fit(self, x , y):
+    def fit(self, x, y):
         self.x = x
         self.y = y
 
@@ -26,10 +25,3 @@ class KNN():
 
     def predict(self, x):
         return [self.__singlePrediction(observation) for observation in x]
-
-if __name__ == '__main__':
-    knn = KNN(10)
-    x, y = generateClassificationData(1000)
-    knn.fit(x, y)
-    ypred = knn.predict(x)
-    print(accuracy(y, ypred))

@@ -1,8 +1,5 @@
-from utils.devutils import generateClassificationData
-from utils.metrics import accuracy
 import numpy as np
 import math
-from sklearn.ensemble import AdaBoostClassifier
 
 
 class Stump:
@@ -74,15 +71,3 @@ class AdaBoost:
 
     def processOutput(self, y):
         return y * 2 - 1
-
-
-if __name__ == '__main__':
-    x, y = generateClassificationData(10000)
-    ab = AdaBoost(nEstimators=5)
-    model = AdaBoostClassifier(n_estimators=5, algorithm='SAMME')
-    model.fit(x, y)
-    ab.fit(x, y)
-    predictions = ab.predict(x)
-    print(f'Model accuracy: {accuracy(y, predictions)}.')
-    newPred = model.predict(x)
-    print(f'Model accuracy: {accuracy(y, newPred)}.')

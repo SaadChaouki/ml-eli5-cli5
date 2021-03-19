@@ -1,6 +1,4 @@
-from utils.devutils import generateClassificationData
 import numpy as np
-from utils.metrics import accuracy
 
 
 class Node:
@@ -113,12 +111,3 @@ class DecisionTree:
             self.print_tree(tree.leftNode, indent=indent + indent)
             self.print_tree(tree.rightNode, indent=indent + indent)
 
-
-if __name__ == '__main__':
-    dt = DecisionTree(maxDepth=10, minimumSample=10)
-    x, y = generateClassificationData(1000)
-    dt.fit(x, y)
-    dt.print_tree()
-    print('-----------------' * 3)
-    predictions = dt.predict(x)
-    print(f'Model accuracy: {accuracy(y, predictions)}.')
