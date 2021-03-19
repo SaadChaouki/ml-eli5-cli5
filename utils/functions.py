@@ -12,7 +12,7 @@ def covariance_matrix(x):
     return cov_matrix
 
 
-def cFactor(n):
+def c_factor(n):
     return (2 * (np.log(n - 1) + 0.5772156649)) - ((2 * (n - 1)) / n)
 
 
