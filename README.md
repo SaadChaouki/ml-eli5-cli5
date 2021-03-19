@@ -16,10 +16,13 @@ Implementation of a Decision Tree Classifier with a Maximum Depth and Minimum Sa
 ### 1.4. Adaptive Boosting
 ### 1.5. Random Forest
 
+
 ## 2. Unsupervised
 ### 2.1. K-Means Clustering
 ### 2.2. Principal Components Analysis
-### 2.2. Isolation Forest
+### 2.3. Isolation Forest
+### 2.4 DBSCAN
+
 
 
 ## 3. Optimisation
