@@ -19,7 +19,7 @@ class BaseRegression(object):
         for _ in range(self.iterations):
             y_predicted = self.predict(X)
             self.weights -= self.learning_rate * self.__compute_gradient(X, y, y_predicted)
-            self.bias -= self.learning_rate * np.sum(y_predicted - y)
+            self.bias -= self.learning_rate * np.mean(y_predicted - y)
 
     def predict(self, X):
         return np.dot(X, self.weights) + self.bias
