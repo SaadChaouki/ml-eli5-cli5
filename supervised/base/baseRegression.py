@@ -1,4 +1,5 @@
 import numpy as np
+from utils.metrics import meanSquaredError
 
 
 class BaseRegression(object):
@@ -8,7 +9,7 @@ class BaseRegression(object):
         self.error = []
 
     def compute_error(self, y, y_predicted):
-        self.error.append(np.mean(np.square(y_predicted - y)))
+        self.error.append(meanSquaredError(yTrue=y, yPred=y_predicted))
 
     def __compute_gradient(self, X, y, y_predicted):
         return np.dot(X.T, y_predicted - y) + self.regularization(self.weights)
@@ -20,7 +21,7 @@ class BaseRegression(object):
 
         for _ in range(self.iterations):
             y_predicted = self.predict(X)
-            self.compute_error(y, y_predicted)
+            # self.compute_error(y, y_predicted)
             self.weights -= self.learning_rate * self.__compute_gradient(X, y, y_predicted)
             self.bias -= self.learning_rate * np.sum(y_predicted - y)
 
