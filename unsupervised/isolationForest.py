@@ -1,110 +1,87 @@
 import numpy as np
-import pandas as pd
-import random
-import matplotlib.pyplot as plt
-from utils.functions import cFactor
+from utils.functions import c_factor
 
 
 class IsolationNode:
-    def __init__(self, featureIndex=None, featureThreshold=None, leftNode=None,
-                 rightNode=None, sample=None, depth=None):
-        self.featureIndex = featureIndex
-        self.featureThreshold = featureThreshold
-        self.leftNode = leftNode
-        self.rightNode = rightNode
+    def __init__(self, feature_index=None, feature_threshold=None, left_node=None,
+                 right_node=None, sample=None, depth=None):
+        self.feature_index = feature_index
+        self.feature_threshold = feature_threshold
+        self.left_node = left_node
+        self.right_node = right_node
         self.sample = sample
         self.depth = depth
 
     def describe(self):
         return f"Node in depth {self.depth} and sample size of {len(self.sample)}. " \
-               f"Splitting on {self.featureIndex} by {self.featureThreshold}"
+               f"Splitting on {self.feature_index} by {self.feature_threshold}"
 
 
 class IsolationTree:
-    def __init__(self, maxDepth):
+    def __init__(self, max_depth):
         self.root = None
-        self.maxDepth = maxDepth
+        self.maxDepth = max_depth
 
     def fit(self, X):
-        self.root = self.__growTree(X)
+        self.root = self.__grow_tree(X)
 
-    def __growTree(self, X, depth=0):
+    def __grow_tree(self, X, depth=0):
         if depth >= self.maxDepth + 1 or len(X) <= 1:
             return None
 
         # Get a split
-        randomSplit = self.__randomSplit(X)
+        split_random = self.__random_split(X)
 
         # Start the node
-        node = IsolationNode(featureIndex=randomSplit['index'], featureThreshold=randomSplit['value'],
+        node = IsolationNode(feature_index=split_random['index'], feature_threshold=split_random['value'],
                              depth=depth, sample=X)
 
         # Recursive
-        node.leftNode = self.__growTree(randomSplit['leftData'], depth=depth + 1)
-        node.rightNode = self.__growTree(randomSplit['rightData'], depth=depth + 1)
+        node.left_node = self.__grow_tree(split_random['leftData'], depth=depth + 1)
+        node.right_node = self.__grow_tree(split_random['rightData'], depth=depth + 1)
         return node
 
     def __print_tree(self, tree=None, indent="--"):
         tree = self.root if tree is None else tree
         print(indent + ' ' + tree.describe())
-        if tree.leftNode is not None:
-            self.__print_tree(tree.leftNode, indent=indent + indent)
-        if tree.rightNode is not None:
-            self.__print_tree(tree.rightNode, indent=indent + indent)
+        if tree.left_node is not None:
+            self.__print_tree(tree.left_node, indent=indent + indent)
+        if tree.right_node is not None:
+            self.__print_tree(tree.right_node, indent=indent + indent)
 
-    def __randomSplit(self, X):
+    @staticmethod
+    def __random_split(X):
         randomIndex = np.random.randint(0, X.shape[1])
         randomValue = np.random.uniform(min(X[:, randomIndex]), max(X[:, randomIndex]))
         leftData = X[X[:, randomIndex] < randomValue]
         rightData = X[X[:, randomIndex] >= randomValue]
         return {'index': randomIndex, 'value': randomValue, 'leftData': leftData, 'rightData': rightData}
 
-    def pathLength(self, X, pathLength=0, node=None):
+    def path_length(self, X, length_path=0, node=None):
         node = self.root if node is None else node
-        if X[node.featureIndex] < node.featureThreshold and isinstance(node.leftNode, IsolationNode):
-            return self.pathLength(X, pathLength + 1, node.leftNode)
-        elif X[node.featureIndex] >= node.featureThreshold and isinstance(node.rightNode, IsolationNode):
-            return self.pathLength(X, pathLength + 1, node.rightNode)
+        if X[node.feature_index] < node.feature_threshold and isinstance(node.left_node, IsolationNode):
+            return self.path_length(X, length_path + 1, node.left_node)
+        elif X[node.feature_index] >= node.feature_threshold and isinstance(node.right_node, IsolationNode):
+            return self.path_length(X, length_path + 1, node.right_node)
         else:
-            return pathLength
+            return length_path
 
 
 class IsolationForest:
-    def __init__(self, numEstimators):
-        self.maxDepth = 100
-        self.numEstimators = numEstimators
-        self.estimators = [IsolationTree(maxDepth=self.maxDepth) for _ in range(self.numEstimators)]
+    def __init__(self, num_estimators=100):
+        self.max_depth = 100
+        self.num_estimators = num_estimators
+        self.estimators = [IsolationTree(max_depth=self.max_depth) for _ in range(self.num_estimators)]
 
     def fit(self, X):
-        self.sampleSize = X.shape[0]
+        self.sample_size = X.shape[0]
         for tree in self.estimators:
             tree.fit(X)
 
-    def __singlePrediction(self, observation):
-        pathDepth = np.mean([tree.pathLength(observation) for tree in self.estimators])
-        return pathDepth
+    def __single_prediction(self, observation):
+        path_depth = np.mean([tree.path_length(observation) for tree in self.estimators])
+        return path_depth
 
     def predict(self, X):
-        predictions = [self.__singlePrediction(observation) for observation in X]
-        return np.array([np.power(2, -length / cFactor(self.sampleSize)) for length in predictions])
-
-
-if __name__ == '__main__':
-    ilf = IsolationForest(numEstimators=10)
-    mean = [0, 0]
-    cov = [[1, 0], [0, 1]]  # diagonal covariance
-    Nobjs = 10000
-    x, y = np.random.multivariate_normal(mean, cov, Nobjs).T
-    # Add manual outlier
-    x[0] = 5
-    y[0] = 5
-
-    X = np.array([x, y]).T
-    X = pd.DataFrame(X, columns=['feat1', 'feat2'])
-
-    k = X.values
-    ilf.fit(k)
-    pred = ilf.predict(k)
-    plt.figure(figsize=(7, 7))
-    plt.scatter(x, y, c=pred, cmap='Blues');
-    plt.show()
+        predictions = [self.__single_prediction(observation) for observation in X]
+        return np.array([np.power(2, -length / c_factor(self.sample_size)) for length in predictions])
