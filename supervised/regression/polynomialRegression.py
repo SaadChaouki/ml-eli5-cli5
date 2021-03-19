@@ -1,10 +1,9 @@
-from itertools import combinations_with_replacement
-import numpy as np
 import itertools
+from itertools import combinations_with_replacement
+
+import numpy as np
+
 from supervised.base.baseRegression import BaseRegression
-import matplotlib.pyplot as plt
-from supervised.regression.linearRegression import LinearRegression
-from utils.metrics import meanSquaredError
 
 
 class PolynomialTransformation(object):
