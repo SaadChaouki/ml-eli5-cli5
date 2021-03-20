@@ -2,7 +2,7 @@ from utils.functions import covariance_matrix
 import numpy as np
 
 
-class PCA():
+class PCA(object):
     def __init__(self, num_components):
         self.num_components = num_components
 
