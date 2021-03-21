@@ -1,5 +1,4 @@
 import numpy as np
-from utils.metrics import meanSquaredError
 
 
 class Node(object):
@@ -64,14 +63,6 @@ class BaseDecisionTree(object):
         right = featureTarget['y'][~condition]
         if len(left) == 0 or len(right) == 0: return None, None
         return left, right
-
-    @staticmethod
-    def __average_value(y):
-        return np.mean(y)
-
-    @staticmethod
-    def __variance_reduction(y):
-        return meanSquaredError(y)
 
     def fit(self, X, y):
         self.number_features = X.shape[1]
