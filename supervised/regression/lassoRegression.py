@@ -1,13 +1,5 @@
 from supervised.base.baseRegression import BaseRegression
-import numpy as np
-
-
-class L1Regularization(object):
-    def __init__(self, alpha):
-        self.alpha = alpha
-
-    def __call__(self, weights):
-        return self.alpha * np.sign(weights)
+from processing.regularization import L1Regularization
 
 
 class LassoRegression(BaseRegression):

@@ -1,16 +1,5 @@
-import numpy as np
+from processing.regularization import L1L2Regularization
 from supervised.base.baseRegression import BaseRegression
-
-
-class L1L2Regularization(object):
-    def __init__(self, l1_ratio=.5, alpha=1):
-        self.l1_ratio = l1_ratio
-        self.alpha = alpha
-
-    def __call__(self, weights):
-        l1 = self.l1_ratio * np.sign(weights)
-        l2 = (1 - self.l1_ratio) * weights
-        return self.alpha * (l1 + l2)
 
 
 class ElasticNet(BaseRegression):

@@ -1,12 +1,5 @@
 from supervised.base.baseRegression import BaseRegression
-
-
-class L2Regularization(object):
-    def __init__(self, alpha):
-        self.alpha = alpha
-
-    def __call__(self, weights):
-        return self.alpha * weights
+from processing.regularization import L2Regularization
 
 
 class RidgeRegression(BaseRegression):
