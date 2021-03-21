@@ -1,5 +1,4 @@
 import numpy as np
-from utils.metrics import meanSquaredError
 
 
 class BaseRegression(object):
