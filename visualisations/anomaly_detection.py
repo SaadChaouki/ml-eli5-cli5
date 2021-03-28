@@ -1,11 +1,11 @@
-from unsupervised.isolationForest import IsolationForest
-from unsupervised.localOutlierFactor import LocalOutlierFactor
 import matplotlib
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_blobs
-from visualisations.color_palette import anomaly_map
 from sklearn.preprocessing import MinMaxScaler
-import numpy as np
+
+from unsupervised.isolationForest import IsolationForest
+from unsupervised.localOutlierFactor import LocalOutlierFactor
+from visualisations.color_palette import anomaly_map
 
 matplotlib.use("TkAgg")
 

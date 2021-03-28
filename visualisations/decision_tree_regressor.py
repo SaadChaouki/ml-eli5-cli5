@@ -1,14 +1,12 @@
-from supervised.regression.decisionTreeRegressor import DecisionTreeRegressor
-from sklearn.datasets import make_regression
-from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
-from utils.metrics import meanSquaredError as mse
-from matplotlib.animation import FuncAnimation, PillowWriter
-from scipy.stats import norm
-from visualisations.color_palette import two_colors
-
-import numpy as np
 import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.animation import FuncAnimation, PillowWriter
+from sklearn.model_selection import train_test_split
+
+from supervised.regression.decisionTreeRegressor import DecisionTreeRegressor
+from utils.metrics import meanSquaredError as mse
+from visualisations.color_palette import two_colors
 
 matplotlib.use("TkAgg")
 
