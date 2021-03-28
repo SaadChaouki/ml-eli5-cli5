@@ -28,7 +28,14 @@ Personal project coding the various ML models.
 ## 2. Unsupervised
 ### 2.1 Clustering
 #### 2.1.1. K-Means Clustering
+<p align="center">
+  <img src="visualisations/animations/k-means.gif" />
+</p>
+
 #### 2.1.2. DBSCAN
+<p align="center">
+  <img src="visualisations/animations/dbscan.png" />
+</p>
 
 
 ### 2.2. Anomaly Detection
