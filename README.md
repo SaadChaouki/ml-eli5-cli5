@@ -33,7 +33,7 @@ Personal project coding the various ML models.
 
 ### 2.2. Anomaly Detection
 <p align="center">
-  <img src="visualisations.animations.anomaly_detection.png" />
+  <img src="visualisations/animations/anomaly_detection.png" />
 </p>
 
 
