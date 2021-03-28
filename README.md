@@ -10,6 +10,11 @@ Personal project coding the various ML models.
 ### 1.1. Classification
 #### 1.1.1. Logistic Regression
 #### 1.1.2. Decision Tree Classifier
+
+<p align="center">
+  <img src="visualisations/animations/decision_tree.gif" />
+</p>
+
 #### 1.1.3. K-Nearest Neighbour
 #### 1.1.4. Adaptive Boosting
 #### 1.1.5. Random Forest Classifier
@@ -17,11 +22,26 @@ Personal project coding the various ML models.
 
 ### 1.6. Regression
 #### 1.6.1 Linear Regression
+
+<p align="center">
+  <img src="visualisations/animations/linear_regression.gif" />
+</p>
+
+
 #### 1.6.2 Lasso Regression
 #### 1.6.3 Ridge Regression
 #### 1.6.4 Elastic Net
 #### 1.6.5 Polynomial Regression
+
+<p align="center">
+  <img src="visualisations/animations/polynomial_regression.gif" />
+</p>
+
 #### 1.6.6. Decision Tree Regressor
+
+<p align="center">
+  <img src="visualisations/animations/regression_tree.gif" />
+</p>
 #### 1.6.7. Random Forest Regressor
 
 
@@ -42,10 +62,6 @@ Personal project coding the various ML models.
 <p align="center">
   <img src="visualisations/animations/anomaly_detection.png" />
 </p>
-
-
-#### 2.2.1. Isolation Forest
-#### 2.2.2. Local Outlier Factor
 
 
 ### 2.3. Data Transformation
