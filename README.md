@@ -32,6 +32,11 @@ Personal project coding the various ML models.
 
 
 ### 2.2. Anomaly Detection
+<p align="center">
+  <img src="visualisations.animations.anomaly_detection.png" />
+</p>
+
+
 #### 2.2.1. Isolation Forest
 #### 2.2.2. Local Outlier Factor
 
