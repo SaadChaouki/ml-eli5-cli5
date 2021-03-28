@@ -16,6 +16,11 @@ def c_factor(n):
     return (2 * (np.log(n - 1) + 0.5772156649)) - ((2 * (n - 1)) / n)
 
 
+def min_max_scaler(arr):
+    std = (arr - min(arr)) / (max(arr) - min(arr))
+    return std * (max(arr) - min(arr)) + min(arr)
+
+
 if __name__ == '__main__':
     x, y = generateClassificationData(5)
     m = covariance_matrix(x)
