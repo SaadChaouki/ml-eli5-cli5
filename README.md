@@ -42,6 +42,7 @@ Personal project coding the various ML models.
 <p align="center">
   <img src="visualisations/animations/regression_tree.gif" />
 </p>
+
 #### 1.6.7. Random Forest Regressor
 
 
