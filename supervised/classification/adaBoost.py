@@ -2,6 +2,8 @@ import numpy as np
 import math
 
 
+# TODO: Investigate low performance
+
 class Stump:
     def __init(self, featureIndex: int = None, featureThreshold: float = None):
         self.featureIndex = featureIndex
@@ -63,7 +65,8 @@ class AdaBoost:
     def predict(self, X):
         predictions = []
         for observation in X:
-            prediction = np.sign(sum([clf.singlePrediction(np.array([observation])) * clf.alpha for clf in self.stumps]))
+            prediction = np.sign(
+                sum([clf.singlePrediction(np.array([observation])) * clf.alpha for clf in self.stumps]))
             predictions.append(int(prediction))
         predictions = np.array(predictions)
         predictions[predictions < 0] = 0
