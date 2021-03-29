@@ -43,7 +43,7 @@ class BaseDecisionTree(object):
                     right)) / y.size
 
                 # Check if the split is worth it
-                if computed_impurity < parentGini and len(left) >= self.minimum_sample_leaf\
+                if computed_impurity < parentGini and len(left) >= self.minimum_sample_leaf \
                         and len(right) >= self.minimum_sample_leaf:
                     parentGini = computed_impurity
                     best_split = {'featureIndex': feature, 'threshold': threshold, 'weightedGini': computed_impurity}
@@ -113,5 +113,3 @@ class BaseDecisionTree(object):
         if tree.left_node is not None:
             self.print_tree(tree.left_node, indent=indent + indent)
             self.print_tree(tree.right_node, indent=indent + indent)
-
-
