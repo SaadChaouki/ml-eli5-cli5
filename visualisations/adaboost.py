@@ -14,11 +14,11 @@ if __name__ == '__main__':
 
     X_transformed = pca.transform(X)
 
-    clf = AdaBoost(nEstimators=50)
+    clf = AdaBoost(num_estimators=5)
     clf.fit(X, y)
     preds = clf.predict(X)
 
-    t = AdaBoostClassifier(n_estimators=50)
+    t = AdaBoostClassifier(n_estimators=5)
     t.fit(X, y)
     pred_sk = t.predict(X)
 
