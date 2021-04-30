@@ -20,9 +20,9 @@ class KNN(object):
         return np.bincount(closest_classes).argmax()
 
     def __single_prediction(self, observation):
-        closestIndices = self.__get_closest_indices(observation)
-        closestClasses = self.__get_closest_classes(closestIndices)
-        return self.__getPrediction(closestClasses)
+        closest_indices = self.__get_closest_indices(observation)
+        closest_classes = self.__get_closest_classes(closest_indices)
+        return self.__getPrediction(closest_classes)
 
     def predict(self, x):
         return [self.__single_prediction(observation) for observation in x]
