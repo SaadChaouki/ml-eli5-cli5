@@ -46,8 +46,8 @@ class Stump(object):
 
 
 class AdaBoost(object):
-    def __init__(self, nEstimators: int = 100):
-        self.nEstimators = nEstimators
+    def __init__(self, num_estimators: int = 100):
+        self.num_estimators = num_estimators
         self.stumps = []
 
     def fit(self, X, y):
@@ -58,7 +58,7 @@ class AdaBoost(object):
         numberSamples, numberFeatures = X.shape
         weights = np.ones(numberSamples) / numberSamples
 
-        for _ in range(self.nEstimators):
+        for _ in range(self.num_estimators):
             stump, weights = Stump().fit(X, y, weights)
             self.stumps.append(stump)
 
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     # plt.scatter(X[:, 0], X[:, 1], c = y)
     # plt.show()
 
-    clf = AdaBoost(nEstimators=4)
+    clf = AdaBoost(num_estimators=4)
     clf.fit(X, y)
     predicted = clf.predict(X)
 
