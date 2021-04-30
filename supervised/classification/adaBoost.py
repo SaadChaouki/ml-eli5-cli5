@@ -4,7 +4,7 @@ import math
 
 # TODO: Investigate low performance
 
-class Stump:
+class Stump(object):
     def __init(self, featureIndex: int = None, featureThreshold: float = None):
         self.featureIndex = featureIndex
         self.featureThreshold = featureThreshold
@@ -45,7 +45,7 @@ class Stump:
         return -self.polarity if x[:, self.featureIndex][0] < self.featureThreshold else self.polarity
 
 
-class AdaBoost:
+class AdaBoost(object):
     def __init__(self, nEstimators: int = 100):
         self.nEstimators = nEstimators
         self.stumps = []
@@ -74,3 +74,29 @@ class AdaBoost:
 
     def processOutput(self, y):
         return y * 2 - 1
+
+
+if __name__ == '__main__':
+    from sklearn.datasets import make_classification
+    import matplotlib
+    import numpy as np
+    matplotlib.use("TkAgg")
+    import matplotlib.pyplot as plt
+    from sklearn.ensemble import AdaBoostClassifier
+
+    X, y = make_classification(n_samples=100, n_features=2, n_informative=2, n_redundant=0, random_state=10)
+
+    # plt.scatter(X[:, 0], X[:, 1], c = y)
+    # plt.show()
+
+    clf = AdaBoost(nEstimators=4)
+    clf.fit(X, y)
+    predicted = clf.predict(X)
+
+    clf2 = AdaBoostClassifier(n_estimators=4)
+    clf2.fit(X, y)
+    predicted2 = clf2.predict(X)
+
+
+    print(sum(predicted == y)/len(y))
+    print(sum(predicted2 == y) / len(y))
