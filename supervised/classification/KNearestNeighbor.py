@@ -9,19 +9,20 @@ class KNN(object):
         self.x = x
         self.y = y
 
-    def __getClosestIndices(self, observation):
+    def __get_closest_indices(self, observation):
         return np.argsort([np.linalg.norm(observation - nn) for nn in self.x])[:self.k]
 
-    def __getClosestClasses(self, closestIndices):
-        return [self.y[i] for i in closestIndices]
+    def __get_closest_classes(self, closest_indices):
+        return [self.y[i] for i in closest_indices]
 
-    def __getPrediction(self, closestClasses):
-        return np.bincount(closestClasses).argmax()
+    @staticmethod
+    def __getPrediction(closest_classes):
+        return np.bincount(closest_classes).argmax()
 
-    def __singlePrediction(self, observation):
-        closestIndices = self.__getClosestIndices(observation)
-        closestClasses = self.__getClosestClasses(closestIndices)
+    def __single_prediction(self, observation):
+        closestIndices = self.__get_closest_indices(observation)
+        closestClasses = self.__get_closest_classes(closestIndices)
         return self.__getPrediction(closestClasses)
 
     def predict(self, x):
-        return [self.__singlePrediction(observation) for observation in x]
+        return [self.__single_prediction(observation) for observation in x]
