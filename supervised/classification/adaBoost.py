@@ -1,48 +1,55 @@
 import numpy as np
 import math
 
-
-# TODO: Investigate low performance
+# TODO: Speed up predictions.
 
 class Stump(object):
-    def __init(self, featureIndex: int = None, featureThreshold: float = None):
-        self.featureIndex = featureIndex
-        self.featureThreshold = featureThreshold
+    def __init__(self):
+        self.feature_index = None
+        self.feature_threshold = None
+        self.polarity = 1
+        self.alpha = None
 
     def fit(self, X, y, weights):
-        bestError = float('inf')
-        numberSamples = X.shape[0]
+        best_split_error = float('inf')
+        n_samples = X.shape[0]
+
         for idx in range(X.shape[1]):
             feature = X[:, idx]
             for threshold in np.unique(feature):
-                predictions = np.ones(numberSamples)
+                polarity = 1
+                predictions = np.ones(n_samples)
                 predictions[feature < threshold] = -1
 
                 # Compute error
                 error = weights[y != predictions].sum()
 
                 # Check the error and polarity
-                error = error if error <= 0.5 else 1 - error
-                polarity = 1 if error <= 0.5 else -1
+                if error > .5:
+                    error = 1 - error
+                    polarity = -1
 
                 # Record best split
-                if error < bestError:
-                    bestError = error
-                    self.featureIndex = idx
-                    self.featureThreshold = threshold
+                if error < best_split_error:
+                    best_split_error = error
+                    self.feature_index = idx
+                    self.feature_threshold = threshold
                     self.polarity = polarity
 
-        eps = 1e-10
-        self.alpha = 0.5 * math.log((1 - bestError + eps) / (bestError + eps))
-        predictions = [self.singlePrediction(np.array([x])) for x in X]
+        # Compute the alpha
+        self.alpha = 0.5 * math.log((1 - best_split_error) / (best_split_error + 1e-10))
 
-        newWeights = weights * np.exp(- bestError * y * predictions)
-        newWeights /= sum(newWeights)
+        # Predictions
+        predictions = [self.single_prediction(np.array([x])) for x in X]
 
-        return self, newWeights
+        # Update the weights
+        updated_weights = weights * np.exp(-self.alpha * y * predictions)
+        updated_weights /= sum(updated_weights)
 
-    def singlePrediction(self, x):
-        return -self.polarity if x[:, self.featureIndex][0] < self.featureThreshold else self.polarity
+        return self, updated_weights
+
+    def single_prediction(self, x):
+        return -self.polarity if x[:, self.feature_index][0] < self.feature_threshold else self.polarity
 
 
 class AdaBoost(object):
@@ -51,12 +58,13 @@ class AdaBoost(object):
         self.stumps = []
 
     def fit(self, X, y):
+
         # Update the predictions to -1 and 1 instead of 1 and 0
-        y = self.processOutput(y)
+        y = self.process_output(y)
 
         # Initialise observations weights. The starting point is that all observations are equally important.
-        numberSamples, numberFeatures = X.shape
-        weights = np.ones(numberSamples) / numberSamples
+        num_samples, num_features = X.shape
+        weights = np.ones(num_samples) / num_samples
 
         for _ in range(self.num_estimators):
             stump, weights = Stump().fit(X, y, weights)
@@ -66,37 +74,12 @@ class AdaBoost(object):
         predictions = []
         for observation in X:
             prediction = np.sign(
-                sum([clf.singlePrediction(np.array([observation])) * clf.alpha for clf in self.stumps]))
+                sum([clf.single_prediction(np.array([observation])) * clf.alpha for clf in self.stumps]))
             predictions.append(int(prediction))
         predictions = np.array(predictions)
         predictions[predictions < 0] = 0
         return predictions
 
-    def processOutput(self, y):
+    @staticmethod
+    def process_output(y):
         return y * 2 - 1
-
-
-if __name__ == '__main__':
-    from sklearn.datasets import make_classification
-    import matplotlib
-    import numpy as np
-    matplotlib.use("TkAgg")
-    import matplotlib.pyplot as plt
-    from sklearn.ensemble import AdaBoostClassifier
-
-    X, y = make_classification(n_samples=100, n_features=2, n_informative=2, n_redundant=0, random_state=10)
-
-    # plt.scatter(X[:, 0], X[:, 1], c = y)
-    # plt.show()
-
-    clf = AdaBoost(num_estimators=4)
-    clf.fit(X, y)
-    predicted = clf.predict(X)
-
-    clf2 = AdaBoostClassifier(n_estimators=4)
-    clf2.fit(X, y)
-    predicted2 = clf2.predict(X)
-
-
-    print(sum(predicted == y)/len(y))
-    print(sum(predicted2 == y) / len(y))
