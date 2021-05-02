@@ -39,7 +39,7 @@ class LeakyReLU(object):
 class ELU(object):
     """ Exponential linear unit """
 
-    def __init__(self, alpha=.1):
+    def __init__(self, alpha=1.):
         self.alpha = alpha
 
     def __call__(self, x):
