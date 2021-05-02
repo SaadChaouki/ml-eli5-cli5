@@ -60,20 +60,12 @@ class SELU(object):
     def gradient(self, x):
         return self.l * np.where(x > 0, 1, self.alpha * np.exp(x))
 
-class SoftMax(object):
-    pass
 
+class Softmax(object):
+    def __call__(self, x):
+        e_x = np.exp(x)
+        return e_x / np.sum(e_x, axis=1, keepdims=True)
 
-if __name__ == '__main__':
-    import matplotlib
-    import matplotlib.pyplot as plt
-
-    matplotlib.use("TkAgg")
-
-    function = SELU()
-
-    x = np.arange(-5, 5, 0.1)
-    y = function(x)
-
-    plt.plot(x, y)
-    plt.show()
+    def gradient(self, x):
+        p = self.__call__(x)
+        return p * (1 - p)
