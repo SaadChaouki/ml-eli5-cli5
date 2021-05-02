@@ -1,5 +1,5 @@
 import numpy as np
-from utils.activationFunctions import sigmoid
+from deep_learning.activations import Sigmoid
 from supervised.base.baseRegression import BaseRegression
 
 
@@ -10,7 +10,7 @@ class LogisticRegression(BaseRegression):
         super(LogisticRegression, self).__init__(iterations=iterations, learning_rate=learning_rate)
 
     def predict(self, X):
-        return sigmoid(np.dot(X, self.weights))
+        return Sigmoid()(np.dot(X, self.weights))
 
     def predict_classes(self, X):
         return np.round(self.predict(X), 0)
