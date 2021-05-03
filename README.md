@@ -23,6 +23,10 @@ Personal project coding the various ML models.
 ### 1.6. Regression
 #### 1.6.1 Linear Regression
 
+```
+$ python visualisations/linear_regression.py
+```
+
 <p align="center">
   <img src="visualisations/animations/linear_regression.gif" />
 </p>
@@ -32,6 +36,10 @@ Personal project coding the various ML models.
 #### 1.6.3 Ridge Regression
 #### 1.6.4 Elastic Net
 #### 1.6.5 Polynomial Regression
+
+```
+$ python visualisations/polynomial_regression.py
+```
 
 <p align="center">
   <img src="visualisations/animations/polynomial_regression.gif" />
@@ -54,12 +62,22 @@ Personal project coding the various ML models.
 </p>
 
 #### 2.1.2. DBSCAN
+
+```
+$ python visualisations/dbscan.py 
+```
+
 <p align="center">
   <img src="visualisations/animations/dbscan.png" />
 </p>
 
 
 ### 2.2. Anomaly Detection
+
+```
+$ python visualisations/anomaly_detection.py 
+```
+
 <p align="center">
   <img src="visualisations/animations/anomaly_detection.png" />
 </p>
