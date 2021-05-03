@@ -8,6 +8,8 @@ from matplotlib.lines import Line2D
 matplotlib.use("TkAgg")
 
 if __name__ == '__main__':
+
+    # Generate data
     X, y = make_moons(n_samples=1000, noise=.08, random_state=42)
 
     # Plot
@@ -19,19 +21,19 @@ if __name__ == '__main__':
     model = DBSCAN(epsilon=.125, min_neighborhood=5)
     clusters = model.fit_predict(X)
 
+    # Assigning colours to each cluster.
     colours_dict = {
         -1: 'black',
         0: two_colors[0],
         1: two_colors[1]
     }
 
-    # Original Data
+    # Plotting
     scatter = ax.scatter(X[:, 0], X[:, 1], c=[colours_dict[x] for x in clusters])
     plt.xlabel('Feature 1')
     plt.ylabel('Feature 2')
     legend_elements = [Line2D([0], [0], marker='o', color='w', label='Scatter', markerfacecolor=two_colors[0]),
                        Line2D([0], [0], marker='o', color='w', label='Scatter', markerfacecolor=two_colors[1]),
                        Line2D([0], [0], marker='o', color='w', label='Scatter', markerfacecolor='black')]
-
     plt.legend(handles=legend_elements, labels=['Cluster 1', 'Cluster 2', 'Noise'])
-    fig.savefig('animations/dbscan.png')
+    plt.show()
