@@ -57,6 +57,11 @@ $ python visualisations/polynomial_regression.py
 ## 2. Unsupervised
 ### 2.1 Clustering
 #### 2.1.1. K-Means Clustering
+
+```
+$ python3 visualisations/k_means.py
+```
+
 <p align="center">
   <img src="visualisations/animations/k-means.gif" />
 </p>
