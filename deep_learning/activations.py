@@ -85,3 +85,11 @@ class LogSoftmax(Activation, ABC):
     def __call__(self, x):
         e_x = np.exp(x)
         return np.log(e_x / np.sum(e_x, axis=1, keepdims=True))
+
+
+class Linear(Activation):
+    def __call__(self, x):
+        return x
+
+    def gradient(self, x):
+        return np.ones((x.shape[0], x.shape[1]))
