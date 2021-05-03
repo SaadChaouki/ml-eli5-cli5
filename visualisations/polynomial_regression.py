@@ -23,7 +23,7 @@ def update(i):
 if __name__ == '__main__':
 
     # Argument parsing.
-    parser = argparse.ArgumentParser(description='Visualise a customer Polynomial Regression model in training.')
+    parser = argparse.ArgumentParser(description='Visualise a custom Polynomial Regression model in training.')
     parser.add_argument('--max_iter', type=int, help='Maximum number of iterations.', default=100)
     parser.add_argument('--random_state', type=int, help='Random state for data generation.', default=42)
     parser.add_argument('--n_samples', type=int, help='Number of data points.', default=500)
