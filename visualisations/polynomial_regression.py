@@ -1,26 +1,41 @@
 from supervised.regression.polynomialRegression import PolynomialRegression
-from sklearn.model_selection import train_test_split
-import numpy as np
-import matplotlib.pyplot as plt
-from utils.metrics import meanSquaredError as mse
-from matplotlib.animation import FuncAnimation, PillowWriter
-import matplotlib
 from visualisations.color_palette import two_colors
+from deep_learning.loss import MSELoss
+
+from sklearn.model_selection import train_test_split
+
+from matplotlib.animation import FuncAnimation
+import matplotlib.pyplot as plt
+import matplotlib
+
+import numpy as np
+import argparse
 
 matplotlib.use("TkAgg")
 
 
 def update(i):
     y_pred = np.array([x for _, x in sorted(zip(X_train, model.error[i]))])
-    plt.title(f'Iteration: {i + 1} | MSE: {round(mse(y_train, model.error[i]), 2)}')
+    plt.title(f'Iteration: {i + 1} | MSE: {round(MSELoss()(y_train, model.error[i]), 2)}')
     line.set_ydata(y_pred)
 
 
 if __name__ == '__main__':
-    np.random.seed(42)
-    max_iterations = 150
 
-    n_features = 500
+    # Argument parsing.
+    parser = argparse.ArgumentParser(description='Visualise a customer Linear Regression model in training.')
+    parser.add_argument('--max_iter', type=int, help='Maximum number of iterations.', default=100)
+    parser.add_argument('--random_state', type=int, help='Random state for data generation.', default=42)
+    parser.add_argument('--n_samples', type=int, help='Number of data points.', default=500)
+    parser.add_argument('--test_size', type=float, help='Test set size.', default=.2)
+    parser.add_argument('--lr', type=float, help='Learning Rate.', default=.01)
+    parser.add_argument('--degree', type=int, help='Degrees.', default=3)
+    args = parser.parse_args()
+
+    # Setting up parameters.
+    np.random.seed(args.random_state)
+    max_iterations = args.max_iter
+    n_features = args.n_samples
 
     # Data generation
     X = np.random.normal(0, 1, n_features)
@@ -30,28 +45,33 @@ if __name__ == '__main__':
     X = np.atleast_2d(X).reshape(-1, 1)
 
     # Train - Test Split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2, random_state=42, shuffle=True)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=args.test_size,
+                                                        random_state=args.random_state, shuffle=True)
 
     # Model and Predictions
-    model = PolynomialRegression(learning_rate=.01, iterations=max_iterations, degree=3)
+    model = PolynomialRegression(learning_rate=args.lr, iterations=max_iterations, degree=args.degree)
     model.fit(X_train, y_train)
 
     # Plot
     fig, ax = plt.subplots(figsize=(15, 6), dpi=80)
     fig.suptitle('Polynomial Regression', fontsize=20)
 
-    # Original Data
+    # Plot original training and testing data.
     ax.scatter(X_train, y_train, color=two_colors[0], label='Train Data')
     ax.scatter(X_test, y_test, color=two_colors[1], label='Test Data')
+
+    # Plot first iteration line
+    y_pred = np.array([x for _, x in sorted(zip(X_train, model.error[0]))])
+    X_train_sorted = np.array(sorted(X_train))
+    line, = ax.plot(X_train_sorted, y_pred, color='black', linewidth=2, label="Prediction")
+
+    # Labels and legend.
+    plt.legend(loc='lower right')
     plt.xlabel('Feature')
     plt.ylabel('Target')
 
-    y_pred = np.array([x for _, x in sorted(zip(X_train, model.error[0]))])
-    X_train_sorted = np.array(sorted(X_train))
-
-    line, = ax.plot(X_train_sorted, y_pred, color='black', linewidth=2, label="Prediction")
-
-    plt.legend(loc='lower right')
-
+    # Animation
     animation = FuncAnimation(fig, update, frames=max_iterations, interval=1, repeat=False)
-    animation.save('animations/polynomial_regression.gif', writer=PillowWriter(fps=60))
+
+    # Show plot
+    plt.show()
