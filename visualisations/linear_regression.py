@@ -3,7 +3,7 @@ from sklearn.datasets import make_regression
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from utils.metrics import meanSquaredError as mse
-from matplotlib.animation import FuncAnimation, PillowWriter
+from matplotlib.animation import FuncAnimation
 import matplotlib
 from visualisations.color_palette import two_colors
 import numpy as np
@@ -58,5 +58,4 @@ if __name__ == '__main__':
     plt.legend(loc='lower right')
 
     animation = FuncAnimation(fig, update, frames=max_iterations, interval=1, repeat=False)
-    # animation.save('animations/linear_regression.gif', writer=PillowWriter(fps=60))
     plt.show()
