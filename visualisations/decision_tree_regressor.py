@@ -44,7 +44,7 @@ if __name__ == '__main__':
     X = np.atleast_2d(X).reshape(-1, 1)
 
     # Train - Test Split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=args.test_size, random_state=42)
 
     # Model and Predictions
     classifiers = [DecisionTreeRegressor(max_depth=i + 1) for i in range(max_depth)]
