@@ -1,7 +1,4 @@
 import numpy as np
-
-from deep_learning.activations import Sigmoid
-from deep_learning.loss import BCELoss
 from supervised.regression.decisionTreeRegressor import DecisionTreeRegressor
 
 
@@ -15,8 +12,8 @@ class BaseGradientBoosting(object):
             max_depth=self.max_depth,
             minimum_sample_leaf=self.minimum_sample_leaf
         ) for _ in range(self.num_estimators)]
-        self.loss = BCELoss()
-        self.transformation = Sigmoid()
+        self.loss = None
+        self.transformation = None
 
     def fit(self, X, y):
         # Starting with the average of y
