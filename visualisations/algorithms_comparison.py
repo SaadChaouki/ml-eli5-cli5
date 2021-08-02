@@ -6,10 +6,11 @@ from supervised.classification.logisticRegression import LogisticRegression
 from supervised.classification.KNearestNeighbor import KNN
 from supervised.classification.adaBoost import AdaBoost
 
+from color_palette import two_colors, two_colors_map
+
 from sklearn.datasets import make_classification, make_moons, make_circles
 import matplotlib.pyplot as plt
 import matplotlib
-
 
 matplotlib.use("TkAgg")
 
@@ -20,9 +21,9 @@ if __name__ == '__main__':
 
     # Create the dataset
     datasets = {
-        'linear': None,
-        'moons': None,
-        'circles': None
+        'linear': make_classification(n_features=2, n_redundant=0, n_informative=2),
+        'moons': make_moons(noise=0.3, random_state=0),
+        'circles': make_circles(noise=0.2, factor=0.5, random_state=1)
     }
 
     # Create the models
@@ -31,5 +32,17 @@ if __name__ == '__main__':
     }
 
     # Start the pyplot grid
-    figure = plt.figure(figsize=(27, 9))
+    figure, axes = plt.subplots(len(datasets), len(models) + 1, figsize=(27, 9))
 
+    # Plot the input data
+    for i, data_name in enumerate(datasets):
+        ax = axes[i][0]
+        if i == 0:
+            ax.set_title('Input Data')
+        X, y = datasets[data_name]
+        ax.scatter(X[:, 0], X[:, 1], c=y, cmap=two_colors_map, edgecolors='k')
+        ax.set_xticks(())
+        ax.set_yticks(())
+
+
+    plt.show()
