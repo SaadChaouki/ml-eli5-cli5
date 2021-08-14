@@ -24,7 +24,7 @@ class NaiveBayesClassifier(object):
             X_c = self.X[self.y == c]
 
             for i in range(self.X.shape[1]):
-                self.params[c][i] = {'mean': X_c[:, i].mean(), 'var': X_c[:, i].var()}
+                self.params[c][i] = {'mean': X_c[:, i].mean(), 'std': X_c[:, i].std()}
 
     def __single_prediction(self, sample):
         posteriors = {}
@@ -33,7 +33,7 @@ class NaiveBayesClassifier(object):
         for c in self.classes:
             posterior = self.priors[c]
             for i, value in enumerate(sample):
-                likelihood = self.__likelihood(self.params[c][i]['mean'], self.params[c][i]['var'], value)
+                likelihood = self.__likelihood(self.params[c][i]['mean'], self.params[c][i]['std'], value)
                 posterior *= likelihood
             posteriors[c] = posterior
 
