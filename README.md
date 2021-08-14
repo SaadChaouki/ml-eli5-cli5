@@ -2,6 +2,9 @@
 
 Personal project coding the various ML models.
 
+<p align="center">
+  <img src="visualisations/animations/comparison.png" />
+</p>
 
 # Table of Contents
 
