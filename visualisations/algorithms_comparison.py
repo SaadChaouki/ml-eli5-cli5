@@ -46,9 +46,7 @@ if __name__ == '__main__':
         'K-Nearest Neighbor': KNN(k=5),
         'Decision Tree': DecisionTreeClassifier(max_depth=5),
         'Random Forest': RandomForestClassifier(num_estimators=5, max_depth=5, max_features=2),
-        'Logistic Regression': LogisticRegression(learning_rate=.01, iterations=5000),
-        'Naive Bayes': NaiveBayesClassifier(),
-        'nb': GaussianNB()
+        'Logistic Regression': LogisticRegression(learning_rate=.01, iterations=5000)
     }
 
     # Start the pyplot grid
