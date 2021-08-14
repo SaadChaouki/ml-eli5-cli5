@@ -8,8 +8,6 @@ from supervised.classification.adaBoost import AdaBoost
 
 from color_palette import two_colors, two_colors_map
 
-from sklearn.naive_bayes import GaussianNB
-
 from sklearn.datasets import make_classification, make_moons, make_circles
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
@@ -84,7 +82,6 @@ if __name__ == '__main__':
                 axes[j][i + 1].set_title(model_name)
 
             # Plot the data
-
             axes[j][i + 1].scatter(X[:, 0], X[:, 1], c=y, cmap=two_colors_map, edgecolors='k')
 
             # Training data
@@ -103,4 +100,5 @@ if __name__ == '__main__':
             axes[j][i + 1].set_yticks(())
 
     # Show the plot
+    plt.savefig('animations/comparison.png')
     plt.show()
