@@ -1,7 +1,6 @@
 import numpy as np
 import math
 
-# TODO: Speed up predictions.
 
 class Stump(object):
     def __init__(self):
@@ -11,6 +10,7 @@ class Stump(object):
         self.alpha = None
 
     def fit(self, X, y, weights):
+        # Set the best split error
         best_split_error = float('inf')
         n_samples = X.shape[0]
 
@@ -40,7 +40,7 @@ class Stump(object):
         self.alpha = 0.5 * math.log((1 - best_split_error) / (best_split_error + 1e-10))
 
         # Predictions
-        predictions = [self.single_prediction(np.array([x])) for x in X]
+        predictions = self.predict(X)
 
         # Update the weights
         updated_weights = weights * np.exp(-self.alpha * y * predictions)
@@ -48,16 +48,21 @@ class Stump(object):
 
         return self, updated_weights
 
-    def single_prediction(self, x):
-        return -self.polarity if x[:, self.feature_index][0] < self.feature_threshold else self.polarity
+    def predict(self, x: np.array) -> np.array:
+        predictions = np.ones(len(x))
+        negative_idx = (self.polarity * x[:, self.feature_index] < self.polarity * self.feature_threshold)
+        predictions[negative_idx] = -1
+        return predictions
 
 
 class AdaBoost(object):
-    def __init__(self, num_estimators: int = 100):
+    def __init__(self, num_estimators: int = 100) -> None:
         self.num_estimators = num_estimators
-        self.stumps = []
+        self.stumps = None
 
-    def fit(self, X, y):
+    def fit(self, X: np.array, y: np.array) -> None:
+        # Create array to hold the stumps
+        self.stumps = []
 
         # Update the predictions to -1 and 1 instead of 1 and 0
         y = self.process_output(y)
@@ -70,14 +75,14 @@ class AdaBoost(object):
             stump, weights = Stump().fit(X, y, weights)
             self.stumps.append(stump)
 
-    def predict(self, X):
+    def predict(self, X: np.array) -> None:
         predictions = []
         for observation in X:
             prediction = np.sign(
-                sum([clf.single_prediction(np.array([observation])) * clf.alpha for clf in self.stumps]))
+                sum([clf.predict(np.array([observation])) * clf.alpha for clf in self.stumps]))
             predictions.append(int(prediction))
         predictions = np.array(predictions)
-        predictions[predictions < 0] = 0
+        predictions[predictions == -1] = 0
         return predictions
 
     @staticmethod
