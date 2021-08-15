@@ -37,7 +37,7 @@ class ZTest(StatisticalTest):
     def __call__(self, sample: np.array, population_mean: float, population_std: float):
         return self.test(sample=sample,
                          population_mean=population_mean,
-                         population_variance=population_std)
+                         population_std=population_std)
 
 
 if __name__ == '__main__':
