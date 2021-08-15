@@ -16,6 +16,7 @@ class Stump(object):
 
         for idx in range(X.shape[1]):
             feature = X[:, idx]
+
             for threshold in np.unique(feature):
                 polarity = 1
                 predictions = np.ones(n_samples)
@@ -37,7 +38,7 @@ class Stump(object):
                     self.polarity = polarity
 
         # Compute the alpha
-        self.alpha = 0.5 * math.log((1 - best_split_error) / (best_split_error + 1e-10))
+        self.alpha = .5 * math.log((1 - best_split_error) / (best_split_error + 1e-100))
 
         # Predictions
         predictions = self.predict(X)
@@ -75,16 +76,15 @@ class AdaBoost(object):
             stump, weights = Stump().fit(X, y, weights)
             self.stumps.append(stump)
 
-    def predict(self, X: np.array) -> None:
+    def predict(self, X: np.array) -> np.array:
         predictions = []
         for observation in X:
             prediction = np.sign(
                 sum([clf.predict(np.array([observation])) * clf.alpha for clf in self.stumps]))
             predictions.append(int(prediction))
-        predictions = np.array(predictions)
-        predictions[predictions == -1] = 0
+        predictions = (np.array(predictions) + 1) / 2
         return predictions
 
     @staticmethod
-    def process_output(y):
+    def process_output(y: np.array) -> np.array:
         return y * 2 - 1
