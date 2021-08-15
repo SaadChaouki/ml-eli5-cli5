@@ -56,14 +56,37 @@ def sample_size_calculation(p: float, d: float = .05, z: float = 1.96, finite_po
     return int(sample_size)
 
 
+def compute_confidence_intervals(x: np.array, z: float = 1.96) -> float:
+    """
+    Function to compute the confidence interval of the mean of a sample.
+
+    Hazra, Avijit. "Using the confidence interval confidently." Journal of thoracic disease 9.10 (2017): 4125.
+    Formula:
+        CI = x̅ ± z × (std/√n)
+        where
+            CI: Confidence Interval
+            x̅: Sample Mean
+            z: Z Statistic for desired confidence interval
+            std: Sample Standard Deviation
+            n: Sample Size
+    """
+
+    return z * (x.std()/len(x)**.5)
+
+
 if __name__ == '__main__':
-    population = np.array([random.randint(0, 1) for _ in range(1000)])
-    computed_sample_size = sample_size_calculation(p=0.02, d=0.01, z=1.96, finite_population=True,
+    weighted_list = [1] * 2 + [0] * 98
+    population = np.array([random.choice(weighted_list) for _ in range(1000)])
+    computed_sample_size = sample_size_calculation(p=0.02, d=0.02, z=1.96, finite_population=True,
                                                    population_size=len(population))
 
     print(f'Population Size: {len(population)}')
     print(f'Computed Sample Size: {computed_sample_size}')
 
     # Selecting the sample
-    sample = random.choices(population, k=computed_sample_size)
-    print(len(sample))
+    sample = np.array(random.choices(population, k=computed_sample_size))
+    confidence_interval = compute_confidence_intervals(sample)
+    print('*'*50)
+    print(f'True average: {population.mean()*100}')
+    print(f'Sample Average: {sample.mean()*100} ± {confidence_interval*100}.')
+
