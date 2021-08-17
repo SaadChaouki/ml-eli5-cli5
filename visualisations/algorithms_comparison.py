@@ -11,6 +11,7 @@ from supervised.classification.decisionTreeClassifier import DecisionTreeClassif
 from supervised.classification.logisticRegression import LogisticRegression
 from supervised.classification.naiveBayes import NaiveBayesClassifier
 from supervised.classification.randomForestClassifier import RandomForestClassifier
+from supervised.classification.gradientBoostingClassifier import GradientBoostingClassifier
 
 matplotlib.use("TkAgg")
 
@@ -24,7 +25,8 @@ if __name__ == '__main__':
         'linear_2': make_classification(n_features=2, n_redundant=0, n_informative=2, random_state=42),
         'linear': make_classification(n_features=2, n_redundant=0, n_informative=2, random_state=20),
         'moons': make_moons(noise=0.3, random_state=42),
-        'circles': make_circles(noise=0.2, factor=0.5, random_state=20)
+        'circles': make_circles(noise=0.1, factor=0.8, random_state=20),
+        'circles_2': make_circles(noise=0.15, factor=0.5, random_state=20)
     }
 
     # Create train and test sets
@@ -44,7 +46,9 @@ if __name__ == '__main__':
         'Random Forest': RandomForestClassifier(num_estimators=20, max_depth=6, max_features=2),
         'Logistic Regression': LogisticRegression(learning_rate=.01, iterations=5000),
         'Naive Bayes': NaiveBayesClassifier(),
-        'Adaptive Boosting': AdaBoost(num_estimators=100)
+        # 'Adaptive Boosting': AdaBoost(num_estimators=10),
+        'Gradient Boosting': GradientBoostingClassifier(max_depth=7, num_estimators=10, minimum_sample_leaf=2,
+                                                        learning_rate=0.01)
     }
 
     # Start the pyplot grid
