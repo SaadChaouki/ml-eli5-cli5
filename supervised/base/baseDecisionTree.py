@@ -1,5 +1,5 @@
 import numpy as np
-
+from typing import Tuple
 
 class Node(object):
     def __init__(self, gain, predicted_value, feature_index=None, feature_threshold=None, left_node=None,
@@ -20,12 +20,12 @@ class Node(object):
 
 
 class BaseDecisionTree(object):
-    def __init__(self, max_depth=2, minimum_sample_leaf=10):
+    def __init__(self, max_depth: int = 2, minimum_sample_leaf: int = 10):
         self.max_depth = max_depth
         self.minimum_sample_leaf = minimum_sample_leaf
         self.root = None
 
-    def __best_split(self, X, y):
+    def __best_split(self, X: np.array, y: np.array) -> Tuple[dict, dict]:
         # Calculate the gini of parent to evaluate next split.
         parentGini = self.gain_function(y)
         best_split = None
