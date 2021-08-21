@@ -23,10 +23,10 @@ if __name__ == '__main__':
     # Create the dataset
     datasets = {
         'linear_2': make_classification(n_features=2, n_redundant=0, n_informative=2, random_state=42),
-        'linear': make_classification(n_features=2, n_redundant=0, n_informative=2, random_state=20),
+        # 'linear': make_classification(n_features=2, n_redundant=0, n_informative=2, random_state=20),
         'moons': make_moons(noise=0.3, random_state=42),
-        'circles': make_circles(noise=0.1, factor=0.8, random_state=20),
-        'circles_2': make_circles(noise=0.15, factor=0.5, random_state=20)
+        'circles': make_circles(noise=0.1, factor=0.6, random_state=20),
+        # 'circles_2': make_circles(noise=0.2, factor=0.4, random_state=20)
     }
 
     # Create train and test sets
@@ -46,14 +46,14 @@ if __name__ == '__main__':
         'Random Forest': RandomForestClassifier(num_estimators=20, max_depth=6, max_features=2),
         'Logistic Regression': LogisticRegression(learning_rate=.01, iterations=5000),
         'Naive Bayes': NaiveBayesClassifier(),
-        # 'Adaptive Boosting': AdaBoost(num_estimators=10),
+        'Adaptive Boosting': AdaBoost(num_estimators=300),
         'Gradient Boosting': GradientBoostingClassifier(max_depth=7, num_estimators=10, minimum_sample_leaf=2,
                                                         learning_rate=0.01)
-    }
+     }
 
     # Start the pyplot grid
     figure, axes = plt.subplots(len(datasets), len(models) + 1, figsize=(27, 9))
-    figure.suptitle('Machine Learning - ELI5 - CLI5')
+    figure.suptitle('Machine Learning - ELI5 - CLI5 - Classification', size=20)
 
     # Plot the input data
     for i, data_name in enumerate(datasets):
@@ -104,5 +104,5 @@ if __name__ == '__main__':
             axes[j][i + 1].set_yticks(())
 
     # Show the plot
-    plt.savefig('animations/comparison.png')
+    # plt.savefig('animations/comparison.png')
     plt.show()
