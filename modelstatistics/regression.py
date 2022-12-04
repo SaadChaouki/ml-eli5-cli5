@@ -1,3 +1,4 @@
+import abc
 from typing import Optional, Dict, Any
 
 import numpy as np
@@ -78,7 +79,7 @@ class OLS(object):
         return results
 
 
-class MaximumLikelihood(object):
+class MaximumLikelihood(object, metaclass=abc.ABCMeta):
     def __init__(self, x: np.ndarray, y: np.ndarray, optimization_method: str = 'l-bfgs-b'):
         self.x = x
         self.y = y
@@ -91,6 +92,7 @@ class MaximumLikelihood(object):
         self.model = minimize(self.mle_function, initial_guesses, method=self.method)
         self.beta = self.model['x'][:len(self.model['x']) - 1]
 
+    @abc.abstractmethod
     def mle_function(self, parameters: np.ndarray) -> float:
         pass
 
