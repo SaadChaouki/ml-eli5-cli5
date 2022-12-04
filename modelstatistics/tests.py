@@ -41,7 +41,6 @@ class ZTest(StatisticalTest):
 
 
 if __name__ == '__main__':
-    print('saad')
     x = np.array([0, 1, 0, 0, 0])
     s = ZTest.test(x, .3, 100)
     print(s)

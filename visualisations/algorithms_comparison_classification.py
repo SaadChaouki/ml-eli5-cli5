@@ -13,7 +13,6 @@ from supervised.classification.naiveBayes import NaiveBayesClassifier
 from supervised.classification.randomForestClassifier import RandomForestClassifier
 from supervised.classification.gradientBoostingClassifier import GradientBoostingClassifier
 
-matplotlib.use("TkAgg")
 
 if __name__ == '__main__':
     # Parameters

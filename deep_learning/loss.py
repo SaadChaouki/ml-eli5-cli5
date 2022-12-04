@@ -1,7 +1,5 @@
 from abc import ABC
 from deep_learning.activations import LogSoftmax
-from torch import nn
-import torch
 import numpy as np
 
 
@@ -67,39 +65,3 @@ def to_categorical(x, n_col=None):
     one_hot = np.zeros((x.shape[0], n_col))
     one_hot[np.arange(x.shape[0]), x] = 1
     return one_hot
-
-if __name__ == '__main__':
-    from deep_learning.activations import LogSoftmax
-
-    torch.manual_seed(10)
-
-    softmax = nn.Softmax(dim=1)
-
-    loss = nn.CrossEntropyLoss()
-    input = torch.rand(3, 5, requires_grad=True)
-    target = torch.empty(3, dtype=torch.long).random_(5)
-    output = loss(input, target)
-    output.backward()
-
-    # Mine
-    y_pred = input.detach().numpy()
-    y_true = target.numpy()
-
-    print(to_categorical(y_true, 5))
-
-    print(y_true)
-
-    # SoftMax Transformation
-    # print('-' * 50)
-    # print(f'Torch Softmax {softmax(input)}')
-
-    # Loss
-    print('-'*50)
-    print(f'Torch Loss {output}.')
-    print(f'Custom Loss {CrossEntropyLoss()(to_categorical(y_true, 5), y_pred)}.')
-
-    # Gradient
-    print('-' * 50)
-    print(f'Torch Gradient {input.grad}')
-    # print(f'Custom Gradient {CrossEntropyLoss().gradient(y_true, y_pred)}')
-    print('-' * 50)
